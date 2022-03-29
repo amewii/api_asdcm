@@ -34,6 +34,7 @@ $router->get('/usersgovsLuarList', 'usersController@listLuar');
 $router->get('/usersswastaList', 'usersController@listSwasta');
 $router->get('/userspelajarList', 'usersController@listPelajar');
 $router->get('/usersListKerajaan', 'usersController@listKerajaan');
+$router->get('/usersListKerajaan/{FK_users}', 'usersController@listKerajaanSingle');
 $router->get('/usersListSwasta', 'usersController@listSwasta');
 $router->get('/usersListPelajar', 'usersController@listPelajar');
 $router->post('/usersUpdate', 'usersController@update'); //setting tambah baru
@@ -115,3 +116,18 @@ $router->post('/tetapans', 'tetapansController@show');
 $router->get('/tetapansList', 'tetapansController@list');
 $router->post('/tetapansUpdate', 'tetapansController@update'); //setting tambah baru
 $router->post('/tetapansDelete', 'tetapansController@delete');
+
+// peranan api
+$router->post('/addPeranan', 'perananController@register');
+$router->post('/peranan', 'perananController@show');
+$router->get('/perananList', 'perananController@list');
+$router->post('/perananUpdate', 'perananController@update'); //setting tambah baru
+$router->post('/perananDelete', 'perananController@delete');
+
+// capaian api
+$router->post('/addCapaian', 'capaianController@register');
+$router->post('/capaian', 'capaianController@show');
+$router->get('/capaian/{FK_users}', 'capaianController@showGet');
+$router->get('/capaianList', 'capaianController@list');
+$router->post('/capaianUpdate', 'capaianController@update'); //setting tambah baru
+$router->post('/capaianDelete', 'capaianController@delete');

@@ -115,6 +115,21 @@ class med_permohonansController extends Controller
         
     }
 
+    public function listtahun()  {
+        $med_programs = med_permohonans::select(med_permohonans::raw("substr(tarikh_permohonan,1,4) as tahun")) -> 
+                        groupBy('tahun')->
+                        get(); // list all data
+
+        if ($med_programs)   {
+            return response()->json([
+                'success'=>'true',
+                'message'=>'List Success!',
+                'data'=>$med_programs
+            ],200);
+        }
+        
+    }
+
     public function listStatus($status_permohonan)  {
         $med_permohonans = med_permohonans::select("*", "med_permohonans.id AS PK") -> 
                                             join('users', 'users.id', '=', 'med_permohonans.FK_users') -> 
