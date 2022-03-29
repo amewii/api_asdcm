@@ -107,6 +107,22 @@ class med_programsController extends Controller
         
     }
 
+    public function listtahun()  {
+        $med_programs = med_programs::select(med_programs::raw("substr(tarikh_program,1,4) as tahun")) ->
+                                        where('med_programs.statusrekod','1') -> 
+                                        groupBy('tahun')->
+                                        get(); // list all data
+
+        if ($med_programs)   {
+            return response()->json([
+                'success'=>'true',
+                'message'=>'List Success!',
+                'data'=>$med_programs
+            ],200);
+        }
+        
+    }
+
     public function listpdf()  {
         $med_programs = med_programs::select("*", "med_programs.id AS PK") ->
                                         join('med_kategoriprograms', 'med_kategoriprograms.id', '=', 'med_programs.FK_kategori') -> 

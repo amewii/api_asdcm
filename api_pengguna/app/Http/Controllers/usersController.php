@@ -129,6 +129,23 @@ class usersController extends Controller
         
     }
 
+    public function listKerajaanSingle($FK_users)  {
+        $users = users::select("*", "users.id AS PK") -> 
+                        join('jenispenggunas', 'jenispenggunas.id', '=', 'users.FK_jenis_pengguna') -> 
+                        join('maklumatkecemasans', 'maklumatkecemasans.FK_users', '=', 'users.id') -> 
+                        where('FK_jenis_pengguna','1') -> where('users.id',$FK_users) ->
+                        get();
+
+        if ($users)   {
+            return response()->json([
+                'success'=>'true',
+                'message'=>'List Success!',
+                'data'=>$users
+            ],200);
+        }
+        
+    }
+
     public function listSwasta()  {
         $users = users::join('jenispenggunas', 'jenispenggunas.id', '=', 'users.FK_jenis_pengguna') -> 
                         join('gelarans', 'gelarans.id', '=', 'users.FK_gelaran') -> 

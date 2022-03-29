@@ -73,9 +73,9 @@ class sub_modulsController extends Controller
     }
 
     public function list()  {
-        $sub_moduls = sub_moduls::select("submoduls.id", "nama_submodul", "FK_modul", "nama_modul", "submoduls.statusrekod", "moduls.statusrekod") -> 
+        $sub_moduls = sub_moduls::select("sub_moduls.id", "nama_submodul", "FK_modul", "nama_modul", "sub_moduls.statusrekod", "moduls.statusrekod") -> 
                                     join('moduls', 'moduls.id', '=', 'sub_moduls.FK_modul') -> 
-                                    where('submoduls.statusrekod','1') -> where('moduls.statusrekod','1') -> get(); // list all data
+                                    where('sub_moduls.statusrekod','1') -> where('moduls.statusrekod','1') -> get(); // list all data
 
         if ($sub_moduls)   {
             return response()->json([

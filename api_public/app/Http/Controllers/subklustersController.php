@@ -69,7 +69,7 @@ class subklustersController extends Controller
 
     public function list()  {
         $subklusters = subklusters::select("*", "subklusters.id AS PK") -> 
-                        join('kluster', 'kluster.id', '=', 'subklusters.FK_kluster') -> 
+                        join('klusters', 'klusters.id', '=', 'subklusters.FK_kluster') -> 
                         where('subklusters.statusrekod','1') -> where('klusters.statusrekod','1') -> get(); // list all data
 
         if ($subklusters)   {
@@ -84,7 +84,7 @@ class subklustersController extends Controller
 
     public function listall()  {
         $subklusters = subklusters::select("*", "subklusters.id AS PK", "subklusters.statusrekod AS subklusterstatusrekod") -> 
-                                    join('kluster', 'kluster.id', '=', 'subklusters.FK_kluster') -> 
+                                    join('klusters', 'klusters.id', '=', 'subklusters.FK_kluster') -> 
                                     get(); // list all data
 
         if ($subklusters)   {

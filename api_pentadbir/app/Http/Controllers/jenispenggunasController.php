@@ -50,7 +50,7 @@ class jenispenggunasController extends Controller
     }
 
     public function list()  {
-        $jenispenggunas = jenispenggunas::all();
+        $jenispenggunas = jenispenggunas::get();
 
         if ($jenispenggunas)   {
             return response()->json([

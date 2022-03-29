@@ -17,6 +17,8 @@ class authController extends Controller
 
         $userS = users::select("*", "users.id AS PK") -> 
                         join('usersgovs', 'usersgovs.FK_users', '=', 'users.id') -> 
+                        join('capaian', 'capaian.FK_users', '=', 'users.id') -> 
+                        join('peranan', 'peranan.id', '=', 'capaian.FK_peranan') -> 
                         where('no_kad_pengenalan',$no_kad_pengenalan)->where('FK_jenis_pengguna','1')->first();
         if($userS){
             $salt = "RMY7nZ3+s8xpU1n0O*0o_EGfdoYtd|iU_AzhKCMoSu_xhh-e|~y8FOG*-xLZ";
