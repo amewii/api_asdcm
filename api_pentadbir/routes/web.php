@@ -21,45 +21,46 @@ $router->get('key', function () {
     return MD5('ASDCM-PROTIGAT');
 });
 
-// users api
-$router->post('/addUsers', 'usersController@register');
-$router->post('/users', 'usersController@show');
-$router->post('/usersIcEmel', 'usersController@showIcEmel');
-$router->post('/usersReset', 'usersController@resetpassword');
-$router->get('/usersGetIc/{no_kad_pengenalan}', 'usersController@showGetIc');
-$router->get('/usersList', 'usersController@list');
-$router->get('/usersgovsIntanList', 'usersController@listIntan');
-$router->get('/usersgovsIntan/{no_kad_pengenalan}', 'usersController@listIntanGetIc');
-$router->get('/usersgovsLuarList', 'usersController@listLuar');
-$router->get('/usersswastaList', 'usersController@listSwasta');
-$router->get('/userspelajarList', 'usersController@listPelajar');
-$router->get('/usersListKerajaan', 'usersController@listKerajaan');
-$router->get('/usersListKerajaan/{FK_users}', 'usersController@listKerajaanSingle');
-$router->get('/usersListSwasta', 'usersController@listSwasta');
-$router->get('/usersListPelajar', 'usersController@listPelajar');
-$router->post('/usersUpdate', 'usersController@update'); //setting tambah baru
-$router->post('/usersDelete', 'usersController@delete');
+// med_users api
+$router->post('/addUsers', 'med_usersController@register');
+$router->post('/users', 'med_usersController@show');
+$router->post('/usersIcEmel', 'med_usersController@showIcEmel');
+$router->post('/usersReset', 'med_usersController@resetpassword');
+$router->get('/usersGetIc/{no_kad_pengenalan}', 'med_usersController@showGetIc');
+$router->get('/usersList', 'med_usersController@list');
+$router->get('/usersgovsIntanList', 'med_usersController@listIntan');
+$router->get('/usersgovsIntan/{no_kad_pengenalan}', 'med_usersController@listIntanGetIc');
+$router->get('/usersgovsLuarList', 'med_usersController@listLuar');
+$router->get('/usersswastaList', 'med_usersController@listSwasta');
+$router->get('/userspelajarList', 'med_usersController@listPelajar');
+$router->get('/usersListAll', 'med_usersController@listAll');
+$router->get('/usersListKerajaan', 'med_usersController@listKerajaan');
+$router->get('/usersListKerajaan/{FK_users}', 'med_usersController@listKerajaanSingle');
+$router->get('/usersListSwasta', 'med_usersController@listSwasta');
+$router->get('/usersListPelajar', 'med_usersController@listPelajar');
+$router->post('/usersUpdate', 'med_usersController@update'); //setting tambah baru
+$router->post('/usersDelete', 'med_usersController@delete');
 
-// usersgovs api
-$router->post('/addUsersgovs', 'usersgovsController@register');
-$router->post('/usersgovs', 'usersgovsController@show');
-$router->get('/usersgovsList', 'usersgovsController@list');
-$router->post('/usersgovsUpdate', 'usersgovsController@update'); //setting tambah baru
-$router->post('/usersgovsDelete', 'usersgovsController@delete');
+// med_usersgov api
+$router->post('/addUsersgovs', 'med_usersgovController@register');
+$router->post('/usersgovs', 'med_usersgovController@show');
+$router->get('/usersgovsList', 'med_usersgovController@list');
+$router->post('/usersgovsUpdate', 'med_usersgovController@update'); //setting tambah baru
+$router->post('/usersgovsDelete', 'med_usersgovController@delete');
 
-// userswastas api
-$router->post('/addUserswastas', 'userswastasController@register');
-$router->post('/userswastas', 'userswastasController@show');
-$router->get('/userswastasList', 'userswastasController@list');
-$router->post('/userswastasUpdate', 'userswastasController@update'); //setting tambah baru
-$router->post('/userswastasDelete', 'userswastasController@delete');
+// med_usersswastas api
+$router->post('/addUserswastas', 'med_usersswastaController@register');
+$router->post('/userswastas', 'med_usersswastaController@show');
+$router->get('/userswastasList', 'med_usersswastaController@list');
+$router->post('/userswastasUpdate', 'med_usersswastaController@update'); //setting tambah baru
+$router->post('/userswastasDelete', 'med_usersswastaController@delete');
 
-// userspelajars api
-$router->post('/addUserspelajars', 'userspelajarsController@register');
-$router->post('/userspelajars', 'userspelajarsController@show');
-$router->get('/userspelajarsList', 'userspelajarsController@list');
-$router->post('/userspelajarsUpdate', 'userspelajarsController@update'); //setting tambah baru
-$router->post('/userspelajarsDelete', 'userspelajarsController@delete');
+// med_userspelajar api
+$router->post('/addUserspelajars', 'med_userspelajarController@register');
+$router->post('/userspelajars', 'med_userspelajarController@show');
+$router->get('/userspelajarsList', 'med_userspelajarController@list');
+$router->post('/userspelajarsUpdate', 'med_userspelajarController@update'); //setting tambah baru
+$router->post('/userspelajarsDelete', 'med_userspelajarController@delete');
 
 // maklumatkecemasans api
 $router->post('/addMaklumatkecemasans', 'maklumatkecemasansController@register');
@@ -68,66 +69,66 @@ $router->get('/maklumatkecemasansList', 'maklumatkecemasansController@list');
 $router->post('/maklumatkecemasansUpdate', 'maklumatkecemasansController@update'); //setting tambah baru
 $router->post('/maklumatkecemasansDelete', 'maklumatkecemasansController@delete');
 
-// kategoriperkhidmatans api
-$router->post('/addKategoriperkhidmatans', 'kategoriperkhidmatansController@register');
-$router->post('/kategoriperkhidmatans', 'kategoriperkhidmatansController@show');
-$router->get('/kategoriperkhidmatansList', 'kategoriperkhidmatansController@list');
-$router->post('/kategoriperkhidmatansUpdate', 'kategoriperkhidmatansController@update'); //setting tambah baru
-$router->post('/kategoriperkhidmatansDelete', 'kategoriperkhidmatansController@delete');
+// med_kategoriperkhidmatan api
+$router->post('/addKategoriperkhidmatans', 'med_kategoriperkhidmatanController@register');
+$router->post('/kategoriperkhidmatans', 'med_kategoriperkhidmatanController@show');
+$router->get('/kategoriperkhidmatansList', 'med_kategoriperkhidmatanController@list');
+$router->post('/kategoriperkhidmatansUpdate', 'med_kategoriperkhidmatanController@update'); //setting tambah baru
+$router->post('/kategoriperkhidmatansDelete', 'med_kategoriperkhidmatanController@delete');
 
-// skims api
-$router->post('/addSkims', 'skimsController@register');
-$router->post('/skims', 'skimsController@show');
-$router->get('/skimsList', 'skimsController@list');
-$router->post('/skimsUpdate', 'skimsController@update'); //setting tambah baru
-$router->post('/skimsDelete', 'skimsController@delete');
+// med_skim api
+$router->post('/addSkims', 'med_skimController@register');
+$router->post('/skims', 'med_skimController@show');
+$router->get('/skimsList', 'med_skimController@list');
+$router->post('/skimsUpdate', 'med_skimController@update'); //setting tambah baru
+$router->post('/skimsDelete', 'med_skimController@delete');
 
-// greds api
-$router->post('/addGreds', 'gredsController@register');
-$router->post('/greds', 'gredsController@show');
-$router->get('/gredsList', 'gredsController@list');
-$router->post('/gredsUpdate', 'gredsController@update'); //setting tambah baru
-$router->post('/gredsDelete', 'gredsController@delete');
+// med_gred api
+$router->post('/addGreds', 'med_gredController@register');
+$router->post('/greds', 'med_gredController@show');
+$router->get('/gredsList', 'med_gredController@list');
+$router->post('/gredsUpdate', 'med_gredController@update'); //setting tambah baru
+$router->post('/gredsDelete', 'med_gredController@delete');
 
-// tarafjawatans api
-$router->post('/addTarafjawatans', 'tarafjawatansController@register');
-$router->post('/tarafjawatans', 'tarafjawatansController@show');
-$router->get('/tarafjawatansList', 'tarafjawatansController@list');
-$router->post('/tarafjawatansUpdate', 'tarafjawatansController@update'); //setting tambah baru
-$router->post('/tarafjawatansDelete', 'tarafjawatansController@delete');
+// med_tarafjawatan api
+$router->post('/addTarafjawatans', 'med_tarafjawatanController@register');
+$router->post('/tarafjawatans', 'med_tarafjawatanController@show');
+$router->get('/tarafjawatansList', 'med_tarafjawatanController@list');
+$router->post('/tarafjawatansUpdate', 'med_tarafjawatanController@update'); //setting tambah baru
+$router->post('/tarafjawatansDelete', 'med_tarafjawatanController@delete');
 
-// jenispenggunas api
-$router->post('/addJenispenggunas', 'jenispenggunasController@register');
-$router->post('/jenispenggunas', 'jenispenggunasController@show');
-$router->get('/jenispenggunasList', 'jenispenggunasController@list');
-$router->post('/jenispenggunasUpdate', 'jenispenggunasController@update'); //setting tambah baru
-$router->post('/jenispenggunasDelete', 'jenispenggunasController@delete');
+// med_jenispengguna api
+$router->post('/addJenispenggunas', 'med_jenispenggunaController@register');
+$router->post('/jenispenggunas', 'med_jenispenggunaController@show');
+$router->get('/jenispenggunasList', 'med_jenispenggunaController@list');
+$router->post('/jenispenggunasUpdate', 'med_jenispenggunaController@update'); //setting tambah baru
+$router->post('/jenispenggunasDelete', 'med_jenispenggunaController@delete');
 
-// jenisperkhidmatans api
-$router->post('/addJenisperkhidmatans', 'jenisperkhidmatansController@register');
-$router->post('/jenisperkhidmatans', 'jenisperkhidmatansController@show');
-$router->get('/jenisperkhidmatansList', 'jenisperkhidmatansController@list');
-$router->post('/jenisperkhidmatansUpdate', 'jenisperkhidmatansController@update'); //setting tambah baru
-$router->post('/jenisperkhidmatansDelete', 'jenisperkhidmatansController@delete');
+// med_jenisperkhidmatan api
+$router->post('/addJenisperkhidmatans', 'med_jenisperkhidmatanController@register');
+$router->post('/jenisperkhidmatans', 'med_jenisperkhidmatanController@show');
+$router->get('/jenisperkhidmatansList', 'med_jenisperkhidmatanController@list');
+$router->post('/jenisperkhidmatansUpdate', 'med_jenisperkhidmatanController@update'); //setting tambah baru
+$router->post('/jenisperkhidmatansDelete', 'med_jenisperkhidmatanController@delete');
 
-// tetapans api
-$router->post('/addTetapans', 'tetapansController@register');
-$router->post('/tetapans', 'tetapansController@show');
-$router->get('/tetapansList', 'tetapansController@list');
-$router->post('/tetapansUpdate', 'tetapansController@update'); //setting tambah baru
-$router->post('/tetapansDelete', 'tetapansController@delete');
+// med_tetapan api
+$router->post('/addTetapans', 'med_tetapanController@register');
+$router->post('/tetapans', 'med_tetapanController@show');
+$router->get('/tetapansList', 'med_tetapanController@list');
+$router->post('/tetapansUpdate', 'med_tetapanController@update'); //setting tambah baru
+$router->post('/tetapansDelete', 'med_tetapanController@delete');
 
-// peranan api
-$router->post('/addPeranan', 'perananController@register');
-$router->post('/peranan', 'perananController@show');
-$router->get('/perananList', 'perananController@list');
-$router->post('/perananUpdate', 'perananController@update'); //setting tambah baru
-$router->post('/perananDelete', 'perananController@delete');
+// med_peranan api
+$router->post('/addPeranan', 'med_perananController@register');
+$router->post('/peranan', 'med_perananController@show');
+$router->get('/perananList', 'med_perananController@list');
+$router->post('/perananUpdate', 'med_perananController@update'); //setting tambah baru
+$router->post('/perananDelete', 'med_perananController@delete');
 
-// capaian api
-$router->post('/addCapaian', 'capaianController@register');
-$router->post('/capaian', 'capaianController@show');
-$router->get('/capaian/{FK_users}', 'capaianController@showGet');
-$router->get('/capaianList', 'capaianController@list');
-$router->post('/capaianUpdate', 'capaianController@update'); //setting tambah baru
-$router->post('/capaianDelete', 'capaianController@delete');
+// med_capaian api
+$router->post('/addCapaian', 'med_capaianController@register');
+$router->post('/capaian', 'med_capaianController@show');
+$router->get('/capaian/{FK_users}', 'med_capaianController@showGet');
+$router->get('/capaianList', 'med_capaianController@list');
+$router->post('/capaianUpdate', 'med_capaianController@update'); //setting tambah baru
+$router->post('/capaianDelete', 'med_capaianController@delete');

@@ -20,9 +20,8 @@ class med_status extends Model implements AuthenticatableContract, AuthorizableC
      */
 
     protected $table = 'med_status';
-
     protected $fillable = [
-        'id', 'kod_status', 'nama_status', 'created_by', 'updated_by', 'statusrekod'
+        'id_status', 'kod_status', 'nama_status', 'created_by', 'updated_by', 'statusrekod'
     ];
 
     /**

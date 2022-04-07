@@ -21,13 +21,13 @@ $router->get('key', function () {
     return MD5('ASDCM-PROTIGAT');
 });
 
-// kampus api
-$router->post('/addKampus', 'kampusesController@register');
-$router->post('/kampus', 'kampusesController@show');
-$router->get('/kampusList', 'kampusesController@list');
-$router->get('/kampusListAll', 'kampusesController@listall');
-$router->post('/kampusUpdate', 'kampusesController@update'); //setting tambah baru
-$router->post('/kampusDelete', 'kampusesController@delete');
+// med_kampus api
+$router->post('/addKampus', 'med_kampusController@register');
+$router->post('/kampus', 'med_kampusController@show');
+$router->get('/kampusList', 'med_kampusController@list');
+$router->get('/kampusListAll', 'med_kampusController@listall');
+$router->post('/kampusUpdate', 'med_kampusController@update'); //setting tambah baru
+$router->post('/kampusDelete', 'med_kampusController@delete');
 
 // agamas api
 $router->post('/addAgamas', 'agamasController@register');
@@ -60,43 +60,44 @@ $router->get('/etniksListAll', 'etniksController@listall');
 $router->post('/etniksUpdate', 'etniksController@update'); //setting tambah baru
 $router->post('/etniksDelete', 'etniksController@delete');
 
-// gelarans api
-$router->post('/addGelarans', 'gelaransController@register');
-$router->post('/gelarans', 'gelaransController@show');
-$router->get('/gelaransList', 'gelaransController@list');
-$router->get('/gelaransListAll', 'gelaransController@listall');
-$router->post('/gelaransUpdate', 'gelaransController@update'); //setting tambah baru
-$router->post('/gelaransDelete', 'gelaransController@delete');
+// med_gelaran api
+$router->post('/addGelarans', 'med_gelaranController@register');
+$router->post('/gelarans', 'med_gelaranController@show');
+$router->get('/gelaransList', 'med_gelaranController@list');
+$router->get('/gelaransListAll', 'med_gelaranController@listall');
+$router->post('/gelaransUpdate', 'med_gelaranController@update'); //setting tambah baru
+$router->post('/gelaransDelete', 'med_gelaranController@delete');
 
-// klusters api
-$router->post('/addKlusters', 'klustersController@register');
-$router->post('/klusters', 'klustersController@show');
-$router->get('/klustersList', 'klustersController@list');
-$router->post('/klustersUpdate', 'klustersController@update'); //setting tambah baru
-$router->post('/klustersDelete', 'klustersController@delete');
+// med_kluster api
+$router->post('/addKlusters', 'med_klusterController@register');
+$router->post('/klusters', 'med_klusterController@show');
+$router->get('/klusters/{FK_kampus}', 'med_klusterController@showGet');
+$router->get('/klustersList', 'med_klusterController@list');
+$router->post('/klustersUpdate', 'med_klusterController@update'); //setting tambah baru
+$router->post('/klustersDelete', 'med_klusterController@delete');
 
-// subklusters api
-$router->post('/addSubklusters', 'subklustersController@register');
-$router->post('/subklusters', 'subklustersController@show');
-$router->get('/subklusters/{FK_kluster}', 'subklustersController@showGet');
-$router->get('/subklustersList', 'subklustersController@list');
-$router->post('/subklustersUpdate', 'subklustersController@update'); //setting tambah baru
-$router->post('/subklustersDelete', 'subklustersController@delete');
+// med_subkluster api
+$router->post('/addSubklusters', 'med_subklusterController@register');
+$router->post('/subklusters', 'med_subklusterController@show');
+$router->get('/subklusters/{FK_kluster}', 'med_subklusterController@showGet');
+$router->get('/subklustersList', 'med_subklusterController@list');
+$router->post('/subklustersUpdate', 'med_subklusterController@update'); //setting tambah baru
+$router->post('/subklustersDelete', 'med_subklusterController@delete');
 
-// moduls api
-$router->post('/addModuls', 'modulsController@register');
-$router->post('/moduls', 'modulsController@show');
-$router->get('/modulsList', 'modulsController@list');
-$router->post('/modulsUpdate', 'modulsController@update'); //setting tambah baru
-$router->post('/modulsDelete', 'modulsController@delete');
+// med_modul api
+$router->post('/addModuls', 'med_modulController@register');
+$router->post('/moduls', 'med_modulController@show');
+$router->get('/modulsList', 'med_modulController@list');
+$router->post('/modulsUpdate', 'med_modulController@update'); //setting tambah baru
+$router->post('/modulsDelete', 'med_modulController@delete');
 
-// sub_moduls api
-$router->post('/addSubmoduls', 'sub_modulsController@register');
-$router->post('/submoduls', 'sub_modulsController@show');
-$router->get('/submoduls/{FK_modul}', 'sub_modulsController@showSubmodul');
-$router->get('/submodulsList', 'sub_modulsController@list');
-$router->post('/submodulsUpdate', 'sub_modulsController@update'); //setting tambah baru
-$router->post('/submodulsDelete', 'sub_modulsController@delete');
+// med_submodul api
+$router->post('/addSubmoduls', 'med_submodulController@register');
+$router->post('/submoduls', 'med_submodulController@show');
+$router->get('/submoduls/{FK_modul}', 'med_submodulController@showSubmodul');
+$router->get('/submodulsList', 'med_submodulController@list');
+$router->post('/submodulsUpdate', 'med_submodulController@update'); //setting tambah baru
+$router->post('/submodulsDelete', 'med_submodulController@delete');
 
 // negara api
 $router->post('/addNegaras', 'negarasController@register');
@@ -112,21 +113,21 @@ $router->get('/negerisList', 'negerisController@list');
 $router->post('/negerisUpdate', 'negerisController@update'); //setting tambah baru
 $router->post('/negerisDelete', 'negerisController@delete');
 
-// unit api
-$router->post('/addUnits', 'unitsController@register');
-$router->post('/units', 'unitsController@show');
-$router->get('/units/{FK_kluster}/{FK_subkluster}', 'unitsController@showGet');
-$router->get('/unitsList', 'unitsController@list');
-$router->post('/unitsUpdate', 'unitsController@update'); //setting tambah baru
-$router->post('/unitsDelete', 'unitsController@delete');
+// med_unit api
+$router->post('/addUnits', 'med_unitController@register');
+$router->post('/units', 'med_unitController@show');
+$router->get('/units/{FK_kluster}/{FK_subkluster}', 'med_unitController@showGet');
+$router->get('/unitsList', 'med_unitController@list');
+$router->post('/unitsUpdate', 'med_unitController@update'); //setting tambah baru
+$router->post('/unitsDelete', 'med_unitController@delete');
 
-// vip api
-$router->post('/addVips', 'vipsController@register');
-$router->post('/vips', 'vipsController@show');
-$router->get('/vipsList', 'vipsController@list');
-$router->get('/vipsListAll', 'vipsController@listall');
-$router->post('/vipsUpdate', 'vipsController@update'); //setting tambah baru
-$router->post('/vipsDelete', 'vipsController@delete');
+// med_vip api
+$router->post('/addVips', 'med_vipController@register');
+$router->post('/vips', 'med_vipController@show');
+$router->get('/vipsList', 'med_vipController@list');
+$router->get('/vipsListAll', 'med_vipController@listall');
+$router->post('/vipsUpdate', 'med_vipController@update'); //setting tambah baru
+$router->post('/vipsDelete', 'med_vipController@delete');
 
 // warganegara api
 $router->post('/addWarganegaras', 'warganegarasController@register');
@@ -159,51 +160,51 @@ $router->get('/capaiansList', 'capaiansController@list');
 $router->post('/capaiansUpdate', 'capaiansController@update'); //setting tambah baru
 $router->post('/capaiansDelete', 'capaiansController@delete');
 
-// menu api
-$router->post('/addMenus', 'menusController@register');
-$router->post('/menus', 'menusController@show');
-$router->get('/menusList', 'menusController@list');
-$router->get('/menusTop', 'menusController@top');
-$router->get('/menusMid/{FK_parent}', 'menusController@mid');
-$router->get('/menusBot/{FK_parent}', 'menusController@bot');
-$router->post('/menusUpdate', 'menusController@update'); //setting tambah baru
-$router->post('/menusDelete', 'menusController@delete');
+// med_menu api
+$router->post('/addMenus', 'med_menuController@register');
+$router->post('/menus', 'med_menuController@show');
+$router->get('/menusList', 'med_menuController@list');
+$router->get('/menusTop', 'med_menuController@top');
+$router->get('/menusMid/{FK_parent}', 'med_menuController@mid');
+$router->get('/menusBot/{FK_parent}', 'med_menuController@bot');
+$router->post('/menusUpdate', 'med_menuController@update'); //setting tambah baru
+$router->post('/menusDelete', 'med_menuController@delete');
 
-// kementerian api
-$router->post('/addKementerians', 'kementeriansController@register');
-$router->post('/kementerians', 'kementeriansController@show');
-$router->get('/kementeriansList', 'kementeriansController@list');
-$router->post('/kementeriansUpdate', 'kementeriansController@update'); //setting tambah baru
-$router->post('/kementeriansDelete', 'kementeriansController@delete');
+// med_kementerian api
+$router->post('/addKementerians', 'med_kementerianController@register');
+$router->post('/kementerians', 'med_kementerianController@show');
+$router->get('/kementeriansList', 'med_kementerianController@list');
+$router->post('/kementeriansUpdate', 'med_kementerianController@update'); //setting tambah baru
+$router->post('/kementeriansDelete', 'med_kementerianController@delete');
 
-// agensi api
-$router->post('/addAgensis', 'agensisController@register');
-$router->post('/agensis', 'agensisController@show');
-$router->get('/agensisList', 'agensisController@list');
-$router->post('/agensisUpdate', 'agensisController@update'); //setting tambah baru
-$router->post('/agensisDelete', 'agensisController@delete');
+// med_agensi api
+$router->post('/addAgensis', 'med_agensiController@register');
+$router->post('/agensis', 'med_agensiController@show');
+$router->get('/agensisList', 'med_agensiController@list');
+$router->post('/agensisUpdate', 'med_agensiController@update'); //setting tambah baru
+$router->post('/agensisDelete', 'med_agensiController@delete');
 
-// bahagian api
-$router->post('/addBahagians', 'bahagiansController@register');
-$router->post('/bahagians', 'bahagiansController@show');
-$router->get('/bahagians/{kod_kementerian}/{kod_agensi}', 'bahagiansController@showGet');
-$router->get('/bahagiansList', 'bahagiansController@list');
-$router->post('/bahagiansUpdate', 'bahagiansController@update'); //setting tambah baru
-$router->post('/bahagiansDelete', 'bahagiansController@delete');
+// med_bahagian api
+$router->post('/addBahagians', 'med_bahagianController@register');
+$router->post('/bahagians', 'med_bahagianController@show');
+$router->get('/bahagians/{kod_kementerian}/{kod_agensi}', 'med_bahagianController@showGet');
+$router->get('/bahagiansList', 'med_bahagianController@list');
+$router->post('/bahagiansUpdate', 'med_bahagianController@update'); //setting tambah baru
+$router->post('/bahagiansDelete', 'med_bahagianController@delete');
 
-// ilawam api
-$router->post('/addIlawams', 'ilawamsController@register');
-$router->post('/ilawams', 'ilawamsController@show');
-$router->get('/ilawams/{kod_bahagian}', 'ilawamsController@showGet');
-$router->get('/ilawamsList', 'ilawamsController@list');
-$router->post('/ilawamsUpdate', 'ilawamsController@update'); //setting tambah baru
-$router->post('/ilawamsDelete', 'ilawamsController@delete');
+// med_ilawam api
+$router->post('/addIlawams', 'med_ilawamController@register');
+$router->post('/ilawams', 'med_ilawamController@show');
+$router->get('/ilawams/{kod_bahagian}', 'med_ilawamController@showGet');
+$router->get('/ilawamsList', 'med_ilawamController@list');
+$router->post('/ilawamsUpdate', 'med_ilawamController@update'); //setting tambah baru
+$router->post('/ilawamsDelete', 'med_ilawamController@delete');
 
-// log api
-$router->post('/addLogs', 'logsController@register');
-$router->post('/logs', 'logsController@show');
-$router->get('/logsList', 'logsController@list');
+// med_log api
+$router->post('/addLogs', 'med_logController@register');
+$router->post('/logs', 'med_logController@show');
+$router->get('/logsList', 'med_logController@list');
 
-// sysposkod api
-$router->get('/sysposkod/{poskod}', 'sysposkodController@show');
-$router->get('/sysposkodList', 'sysposkodController@list');
+// med_sysposkod api
+$router->get('/sysposkod/{poskod}', 'med_sysposkodController@show');
+$router->get('/sysposkodList', 'med_sysposkodController@list');
