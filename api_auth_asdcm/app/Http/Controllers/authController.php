@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
-use App\Models\users;
+use App\Models\med_users;
 
 class authController extends Controller
 {
@@ -15,10 +15,9 @@ class authController extends Controller
         $no_kad_pengenalan = $request->input('no_kad_pengenalan');
         $katalaluan = $request->input('katalaluan');
 
-        $userS = users::select("*", "users.id AS PK") -> 
-                        join('usersgovs', 'usersgovs.FK_users', '=', 'users.id') -> 
-                        join('capaian', 'capaian.FK_users', '=', 'users.id') -> 
-                        join('peranan', 'peranan.id', '=', 'capaian.FK_peranan') -> 
+        $userS = med_users::leftjoin('med_usersgov', 'med_usersgov.FK_users', '=', 'med_users.id_users') -> 
+                        leftjoin('med_capaian', 'med_capaian.FK_users', '=', 'med_users.id_users') -> 
+                        leftjoin('med_peranan', 'med_peranan.id_peranan', '=', 'med_capaian.FK_peranan') -> 
                         where('no_kad_pengenalan',$no_kad_pengenalan)->where('FK_jenis_pengguna','1')->first();
         if($userS){
             $salt = "RMY7nZ3+s8xpU1n0O*0o_EGfdoYtd|iU_AzhKCMoSu_xhh-e|~y8FOG*-xLZ";
@@ -28,7 +27,7 @@ class authController extends Controller
             if($userS->katalaluan === $enc_katalaluan){
                 $token = Str::random(32);
     
-                $user = users::where('no_kad_pengenalan',$no_kad_pengenalan)->update([
+                $user = med_users::where('no_kad_pengenalan',$no_kad_pengenalan)->update([
                     'token' => $token
                 ]);
     
