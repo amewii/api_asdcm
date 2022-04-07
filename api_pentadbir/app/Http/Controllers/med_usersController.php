@@ -5,6 +5,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use App\Models\med_users;
 
@@ -69,14 +70,14 @@ class med_usersController extends Controller
         // mail('amriamewii@gmail.com', '[TEST MESSAGE]', 'This is the body message', 'From: muhammadamri@protigatech.com');
             $mail->SMTPDebug = 0;                                       
             $mail->isSMTP();                                            
-            $mail->Host       = 'mail.protigatech.com';                    
+            $mail->Host       = 'smtp.mailtrap.io';                    
             // $mail->SMTPAuth   = true;                             
-            $mail->Username   = 'muhammadamri@protigatech.com';                 
-            $mail->Password   = 'muhammadamri@protigatech.com';                        
-            $mail->SMTPSecure = 'ssl';                              
-            $mail->Port       = 465;  
+            $mail->Username   = '528af2d8c10540';                 
+            $mail->Password   = '93ad3e81533cc6';                        
+            $mail->SMTPSecure = 'tls';                              
+            $mail->Port       = 587;  
             
-            $mail->setFrom('muhammadamri@protigatech.com', 'ASDCM Technical Team');           
+            $mail->setFrom('admin@smtp.mailtrap.io', 'ASDCM Technical Team');           
             $mail->addAddress($emel);
                 
             $mail->isHTML(true);                                  

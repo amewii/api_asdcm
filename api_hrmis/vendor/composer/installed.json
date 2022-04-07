@@ -1,0 +1,46 @@
+[
+    {
+        "name": "mdridzuan80/hrmisapi",
+        "version": "V1.0.3",
+        "version_normalized": "1.0.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/mdridzuan80/hrmisapi.git",
+            "reference": "c46f34827a8fb8a543c3d6b9657cb80c3f61a43b"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/mdridzuan80/hrmisapi/zipball/c46f34827a8fb8a543c3d6b9657cb80c3f61a43b",
+            "reference": "c46f34827a8fb8a543c3d6b9657cb80c3f61a43b",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "5.2.*"
+        },
+        "time": "2017-03-01T04:46:07+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Hrmisapi\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Md Ridzuan bin Mohammad Latiah",
+                "email": "md.ridzuan80@gmail.com"
+            }
+        ],
+        "description": "Library for consume webservice api with wss",
+        "keywords": [
+            "hrmis"
+        ]
+    }
+]
