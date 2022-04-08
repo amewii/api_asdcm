@@ -274,6 +274,26 @@ class med_programController extends Controller
         
     }
 
+    public function listallbykluster($id)  {
+        $med_program = med_program::select("*", "med_program.statusrekod AS programstatusrekod") ->
+                                    join('med_kategoriprogram', 'med_kategoriprogram.id_kategoriprogram', '=', 'med_program.FK_kategori') -> 
+                                    join('med_kampus', 'med_kampus.id_kampus', '=', 'med_program.FK_kampus') -> 
+                                    join('med_kluster', 'med_kluster.id_kluster', '=', 'med_program.FK_kluster') -> 
+                                    leftjoin('med_subkluster', 'med_subkluster.id_subkluster', '=', 'med_program.FK_subkluster') -> 
+                                    leftjoin('med_unit', 'med_unit.id_unit', '=', 'med_program.FK_unit') ->
+                                    where('med_program.FK_kluster','=',$id)->
+                                    get(); // list all data
+
+        if ($med_program)   {
+            return response()->json([
+                'success'=>'true',
+                'message'=>'List Success!',
+                'data'=>$med_program
+            ],200);
+        }
+        
+    }
+
     public function update(Request $request)    {
         $id = $request->input('id_program');
         $nama_program = $request->input('nama_program');

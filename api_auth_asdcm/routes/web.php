@@ -22,3 +22,4 @@ $router->get('key', function () {
 });
 
 $router->post('/login','authController@login');
+$router->post('/loginUser','authController@loginUser');

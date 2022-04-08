@@ -21,7 +21,8 @@ class med_tetapan extends Model implements AuthenticatableContract, Authorizable
     protected $table = 'med_tetapan';
     protected $fillable = [
         'id_tetapan', 'nama_sistem', 'versi_sistem', 'pelepasan_sistem', 'status_sistem', 
-        'min_katalaluan', 'polisi_katalaluan', 'active_until', 'created_by', 'updated_by', 'statusrekod'
+        'min_katalaluan', 'polisi_katalaluan', 'active_until', 'mail_gateway', 'mail_username', 
+        'mail_password', 'mail_smtp_secure', 'mail_port', 'mail_sender', 'link_sistem', 'created_by', 'updated_by', 'statusrekod'
     ];
 
     /**

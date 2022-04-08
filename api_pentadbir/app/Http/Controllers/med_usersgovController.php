@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Models\med_usersgov;
+use App\Models\med_tetapan;
+use App\Models\med_users;
 
 class med_usersgovController extends Controller
 {
@@ -67,8 +70,59 @@ class med_usersgovController extends Controller
             'gred' => $gred,
             'statusrekod' => $statusrekod,
         ]);
-
+        $med_users_search = med_users::where('id_users',$FK_users)->first();
         if ($register)  {
+            $tetapan_mail = med_tetapan::first();
+            $emelreceiver = $emel_kerajaan;
+            $mail = new PHPMailer();
+        // mail('amriamewii@gmail.com', '[TEST MESSAGE]', 'This is the body message', 'From: muhammadamri@protigatech.com');
+            $mail->SMTPDebug = 0;
+            $mail->isSMTP();
+            $mail->Host       = $tetapan_mail->mail_gateway;
+            // $mail->SMTPAuth   = true;
+            $mail->Username   = $tetapan_mail->mail_username;
+            $mail->Password   = $tetapan_mail->mail_password;
+            $mail->SMTPSecure = $tetapan_mail->mail_smtp_secure;
+            $mail->Port       = $tetapan_mail->mail_port;
+            
+            $mail->setFrom($tetapan_mail->mail_username, 'Bahagian Teknikal ASDCM');
+            $mail->addAddress($emelreceiver);
+                
+            $mail->isHTML(true);                                  
+            $mail->Subject = 'PENGURUSAN MEDIA - PENDAFTARAN AKAUN PENGGUNA';
+            $mail->Body    = '<b>Pendaftaran Akaun Pengguna</b><br><br>
+                                Assalamualaikum dan salam sejahtera<br>
+                                '.$med_users_search->nama.'<br><br>
+                                Tahniah! Anda berjaya mendaftar akaun. <br>
+                                Sekiranya anda tidak membuat permintaan ini, silakan abaikan emel ini. <br>
+                                Sekiranya anda membuat permintaan ini, Sila klik pautan dibawah untuk masuk ke dalam sistem:<br><br>
+                                <a href="'.$tetapan_mail->link_sistem.'/user">Sistem Pengurusan Media INTAN Malaysia</a><br><br>
+                                Terima kasih.';
+            $mail->AltBody = 'Alternate Message';
+            if(!$mail->send()) {
+                // dd("Mailer Error: " . $mail->ErrorInfo);
+                return response()->json([
+                    'success'=>'true',
+                    'message'=>'Konfigurasi Emel Sistem Tidak Tepat. Superadmin perlu set di bahagian Pentadbir Sistem -> Tetapan Sistem',
+                    'data'=>''
+                ],200);
+                // exit;
+            }
+            if(!$mail->send()) {
+                // dd("Mailer Error: " . $mail->ErrorInfo);
+                return response()->json([
+                    'success'=>'true',
+                    'message'=>'Konfigurasi Emel Sistem Tidak Tepat. Superadmin perlu set di bahagian Pentadbir Sistem -> Tetapan Sistem',
+                    'data'=>''
+                ],200);
+            } 
+            else {
+                return response()->json([
+                    'success'=>'true',
+                    'message'=>'Berjaya Mendaftar Akaun! Sila log masuk menggunakan No. Kad Pengenalan & Katalaluan yang didaftarkan.',
+                    'data'=>''
+                ],200);
+            }
             return response()->json([
                 'success'=>'true',
                 'message'=>'Register Success!',

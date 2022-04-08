@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use App\Models\med_users;
+use App\Models\med_tetapan;
 
 // require '../api_pentadbir/vendor/autoload.php';
 
@@ -36,6 +37,57 @@ class med_usersController extends Controller
         ]);
 
         if ($register)  {
+            $tetapan_mail = med_tetapan::first();
+            $emelreceiver = $emel;
+            $mail = new PHPMailer();
+        // mail('amriamewii@gmail.com', '[TEST MESSAGE]', 'This is the body message', 'From: muhammadamri@protigatech.com');
+            $mail->SMTPDebug = 0;
+            $mail->isSMTP();
+            $mail->Host       = $tetapan_mail->mail_gateway;
+            // $mail->SMTPAuth   = true;
+            $mail->Username   = $tetapan_mail->mail_username;
+            $mail->Password   = $tetapan_mail->mail_password;
+            $mail->SMTPSecure = $tetapan_mail->mail_smtp_secure;
+            $mail->Port       = $tetapan_mail->mail_port;
+            
+            $mail->setFrom($tetapan_mail->mail_username, 'Bahagian Teknikal ASDCM');
+            $mail->addAddress($emelreceiver);
+                
+            $mail->isHTML(true);                                  
+            $mail->Subject = 'PENGURUSAN MEDIA - PENDAFTARAN AKAUN PENGGUNA';
+            $mail->Body    = '<b>Pendaftaran Akaun Pengguna</b><br><br>
+                                Assalamualaikum dan salam sejahtera<br>
+                                '.$nama.'<br><br>
+                                Tahniah! Anda berjaya mendaftar akaun. <br>
+                                Sekiranya anda tidak membuat permintaan ini, silakan abaikan emel ini. <br>
+                                Sekiranya anda membuat permintaan ini, Sila klik pautan dibawah untuk masuk ke dalam sistem:<br><br>
+                                <a href="'.$tetapan_mail->link_sistem.'/user">Sistem Pengurusan Media INTAN Malaysia</a><br><br>
+                                Terima kasih.';
+            $mail->AltBody = 'Alternate Message';
+            if(!$mail->send()) {
+                // dd("Mailer Error: " . $mail->ErrorInfo);
+                return response()->json([
+                    'success'=>'true',
+                    'message'=>'Konfigurasi Emel Sistem Tidak Tepat. Superadmin perlu set di bahagian Pentadbir Sistem -> Tetapan Sistem',
+                    'data'=>''
+                ],200);
+                // exit;
+            }
+            if(!$mail->send()) {
+                // dd("Mailer Error: " . $mail->ErrorInfo);
+                return response()->json([
+                    'success'=>'true',
+                    'message'=>'Konfigurasi Emel Sistem Tidak Tepat. Superadmin perlu set di bahagian Pentadbir Sistem -> Tetapan Sistem',
+                    'data'=>''
+                ],200);
+            } 
+            else {
+                return response()->json([
+                    'success'=>'true',
+                    'message'=>'Berjaya Mendaftar Akaun! Sila log masuk menggunakan No. Kad Pengenalan & Katalaluan yang didaftarkan.',
+                    'data'=>''
+                ],200);
+            }
             return response()->json([
                 'success'=>'true',
                 'message'=>'Register Success!',
@@ -56,52 +108,131 @@ class med_usersController extends Controller
         $no_kad_pengenalan = $request->input('no_kad_pengenalan');
         $katalaluan = $request->input('katalaluan');
 
-        $med_users = med_users::where('no_kad_pengenalan',$no_kad_pengenalan)->first();
+        $med_users_search = med_users::where('no_kad_pengenalan',$no_kad_pengenalan)->first();
         $salt = "RMY7nZ3+s8xpU1n0O*0o_EGfdoYtd|iU_AzhKCMoSu_xhh-e|~y8FOG*-xLZ";
         $enc_katalaluan     = hash("sha256", $katalaluan.$salt);
         
-        $med_users -> update([
-            'katalaluan' => $enc_katalaluan
-        ]);
-
-        if ($med_users)   {
-            $emel = $med_users->emel;
-            $mail = new PHPMailer();
-        // mail('amriamewii@gmail.com', '[TEST MESSAGE]', 'This is the body message', 'From: muhammadamri@protigatech.com');
-            $mail->SMTPDebug = 0;                                       
-            $mail->isSMTP();                                            
-            $mail->Host       = 'smtp.mailtrap.io';                    
-            // $mail->SMTPAuth   = true;                             
-            $mail->Username   = '528af2d8c10540';                 
-            $mail->Password   = '93ad3e81533cc6';                        
-            $mail->SMTPSecure = 'tls';                              
-            $mail->Port       = 587;  
-            
-            $mail->setFrom('admin@smtp.mailtrap.io', 'ASDCM Technical Team');           
-            $mail->addAddress($emel);
+        if ($med_users_search)  {
+            $med_users = med_users::where('no_kad_pengenalan',$no_kad_pengenalan) -> update([
+                'katalaluan' => $enc_katalaluan,
+                'resetkatalaluan' => NULL
+            ]);
+            if ($med_users)   {
+                $tetapan_mail = med_tetapan::first();
+            //     $emel = $med_users->emel;
+            //     $mail = new PHPMailer();
+            // // mail('amriamewii@gmail.com', '[TEST MESSAGE]', 'This is the body message', 'From: muhammadamri@protigatech.com');
+            //     $mail->SMTPDebug = 0;
+            //     $mail->isSMTP();
+            //     $mail->Host       = $tetapan_mail->mail_gateway;
+            //     // $mail->SMTPAuth   = true;
+            //     $mail->Username   = $tetapan_mail->mail_username;
+            //     $mail->Password   = $tetapan_mail->mail_password;
+            //     $mail->SMTPSecure = $tetapan_mail->mail_smtp_secure;
+            //     $mail->Port       = $tetapan_mail->mail_port;
                 
-            $mail->isHTML(true);                                  
-            $mail->Subject = 'PENGURUSAN MEDIA';
-            $mail->Body    = '<b>Set Semula Katalaluan</b><br><br>Katalaluan anda telah disetsemula. Sila gunakan katalaluan baharu untuk log ke dalam sistem. Terima kasih.';
-            $mail->AltBody = 'Alternate Message';
-            if(!$mail->send()) {
-                dd("Mailer Error: " . $mail->ErrorInfo);
-                exit;
+            //     $mail->setFrom($tetapan_mail->mail_username, 'Bahagian Teknikal ASDCM');           
+            //     $mail->addAddress($emel);
+                    
+            //     $mail->isHTML(true);                                  
+            //     $mail->Subject = 'PENGURUSAN MEDIA';
+            //     $mail->Body    = '<b>Set Semula Katalaluan</b><br><br>Katalaluan anda telah disetsemula. Sila gunakan katalaluan baharu untuk log ke dalam sistem. Terima kasih.';
+            //     $mail->AltBody = 'Alternate Message';
+            //     if(!$mail->send()) {
+            //         dd("Mailer Error: " . $mail->ErrorInfo);
+            //         exit;
+            //     }
+            //     if(!$mail->send()) {
+            //         dd("Mailer Error: " . $mail->ErrorInfo);
+            //     } 
+            //     else {
+            //         dd("Message has been sent successfully");
+            //     }
+                // dd($mail->send());
+                return response()->json([
+                    'success'=>'true',
+                    'message'=>'Show Success!',
+                    'data'=>''
+                ],200);
             }
-            if(!$mail->send()) {
-                dd("Mailer Error: " . $mail->ErrorInfo);
-            } 
-            else {
-                dd("Message has been sent successfully");
-            }
-            // dd($mail->send());
+        } else  {
             return response()->json([
-                'success'=>'true',
-                'message'=>'Show Success!',
+                'success'=>false,
+                'message'=>"No Data!",
                 'data'=>''
-            ],200);
+            ]);
         }
-        else{
+    }
+
+    public function resetpasswordtomail(Request $request)  {
+        $no_kad_pengenalan = $request->input('no_kad_pengenalan');
+        $masa = $request->input('masa');
+        $landing_page = $request->input('landing_page');
+
+        $med_users_search = med_users::leftjoin('med_usersgov', 'med_usersgov.FK_users', '=', 'med_users.id_users') -> 
+                                        where('no_kad_pengenalan',$no_kad_pengenalan)->first();
+        $salt = "RMY7nZ3+s8xpU1n0O*0o_EGfdoYtd|iU_AzhKCMoSu_xhh-e|~y8FOG*-xLZ";
+        $enc_link     = hash("sha256", $masa.$salt);
+        
+        if ($med_users_search)  {
+            $med_users = med_users::where('no_kad_pengenalan',$no_kad_pengenalan) -> update([
+                'resetkatalaluan' => $enc_link
+            ]);
+            if ($med_users)   {
+                $tetapan_mail = med_tetapan::first();
+                $emel = $med_users_search->emel;
+                $mail = new PHPMailer();
+            // mail('amriamewii@gmail.com', '[TEST MESSAGE]', 'This is the body message', 'From: muhammadamri@protigatech.com');
+                $mail->SMTPDebug = 0;
+                $mail->isSMTP();
+                $mail->Host       = $tetapan_mail->mail_gateway;
+                // $mail->SMTPAuth   = true;
+                $mail->Username   = $tetapan_mail->mail_username;
+                $mail->Password   = $tetapan_mail->mail_password;
+                $mail->SMTPSecure = $tetapan_mail->mail_smtp_secure;
+                $mail->Port       = $tetapan_mail->mail_port;
+                
+                $mail->setFrom($tetapan_mail->mail_username, 'Bahagian Teknikal ASDCM');           
+                $mail->addAddress($med_users_search->emel_kerajaan);
+                $mail->addAddress($med_users_search->emel);
+                    
+                $mail->isHTML(true);                                  
+                $mail->Subject = 'PENGURUSAN MEDIA - SET SEMULA KATALALUAN';
+                $mail->Body    = '<b>Set Semula Katalaluan</b><br><br>
+                                    Assalamualaikum dan salam sejahtera<br>
+                                    '.$med_users_search->nama.'<br><br>
+                                    Anda telah membuat permintaan menetapkan semula kata laluan. <br>
+                                    Sekiranya anda tidak membuat permintaan ini, silakan abaikan emel ini. <br>
+                                    Sekiranya anda membuat permintaan ini, sila klik pautan dibawah untuk tetapkan semula katalaluan anda:<br><br>
+                                    <a href="'.$tetapan_mail->link_sistem.$landing_page.'/?temp='.$enc_link.'">Set Semula Katalaluan</a><br><br>
+                                    Terima kasih.';
+                $mail->AltBody = 'Alternate Message';
+                if(!$mail->send()) {
+                    // dd("Mailer Error: " . $mail->ErrorInfo);
+                    return response()->json([
+                        'success'=>'true',
+                        'message'=>'Konfigurasi Emel Sistem Tidak Tepat. Superadmin perlu set di bahagian Pentadbir Sistem -> Tetapan Sistem',
+                        'data'=>''
+                    ],200);
+                    // exit;
+                }
+                if(!$mail->send()) {
+                    // dd("Mailer Error: " . $mail->ErrorInfo);
+                    return response()->json([
+                        'success'=>'true',
+                        'message'=>'Konfigurasi Emel Sistem Tidak Tepat. Superadmin perlu set di bahagian Pentadbir Sistem -> Tetapan Sistem',
+                        'data'=>''
+                    ],200);
+                } 
+                else {
+                    return response()->json([
+                        'success'=>'true',
+                        'message'=>'Permintaan set semula katalaluan telah dihantar ke<br><br>Emel Rasmi ['.$med_users_search->emel_kerajaan.']<br>Emel Peribadi ['.$med_users_search->emel.']<br><br>Sekiranya Emel Rasmi tidak tepat sila kemaskini di <br><span style="font-weight: bold;">Sistem HRMIS</span>',
+                        'data'=>''
+                    ],200);
+                }
+            }
+        } else  {
             return response()->json([
                 'success'=>false,
                 'message'=>"No Data!",
@@ -139,6 +270,26 @@ class med_usersController extends Controller
 
         if ($med_users)   {
             $mail = new PHPMailer(true);
+            return response()->json([
+                'success'=>'true',
+                'message'=>'Show Success!',
+                'data'=>$med_users
+            ],200);
+        }
+        else{
+            return response()->json([
+                'success'=>false,
+                'message'=>"No Data!",
+                'data'=>''
+            ]);
+        }
+    }
+
+    public function showGetResetKatalaluan($resetkatalaluan)  {
+
+        $med_users = med_users::where('resetkatalaluan',$resetkatalaluan)->first();
+
+        if ($med_users)   {
             return response()->json([
                 'success'=>'true',
                 'message'=>'Show Success!',

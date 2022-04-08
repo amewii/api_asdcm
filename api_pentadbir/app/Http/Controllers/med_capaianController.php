@@ -16,9 +16,9 @@ class med_capaianController extends Controller
         $updated_by = $request->input('updated_by');
         $statusrekod = "1";
 
-        $checkexist = med_capaian::where('med_capaian.FK_peranan',$FK_peranan) -> where('med_capaian.FK_users',$FK_users) -> 
-                                        get(); // list all data
-        if ($checkexist -> count() == 0)   {
+        $checkexist = med_capaian::where('med_capaian.FK_users',$FK_users) -> 
+                                        first(); // list all data
+        if ($checkexist)   {
             $register = med_capaian::create([
                 'FK_peranan' => $FK_peranan,
                 'FK_users' => $FK_users,
@@ -31,7 +31,7 @@ class med_capaianController extends Controller
                 'success'=>'false',
                 'message'=>'Data Exist',
                 'data'=>$checkexist
-            ],405);
+            ],201);
         }        
 
         if ($register)  {
