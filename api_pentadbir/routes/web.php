@@ -26,6 +26,8 @@ $router->post('/addUsers', 'med_usersController@register');
 $router->post('/users', 'med_usersController@show');
 $router->post('/usersIcEmel', 'med_usersController@showIcEmel');
 $router->post('/usersReset', 'med_usersController@resetpassword');
+$router->post('/usersResetToEmail', 'med_usersController@resetpasswordtomail');
+$router->get('/usersResetKatalaluan/{resetkatalaluan}', 'med_usersController@showGetResetKatalaluan');
 $router->get('/usersGetIc/{no_kad_pengenalan}', 'med_usersController@showGetIc');
 $router->get('/usersList', 'med_usersController@list');
 $router->get('/usersgovsIntanList', 'med_usersController@listIntan');

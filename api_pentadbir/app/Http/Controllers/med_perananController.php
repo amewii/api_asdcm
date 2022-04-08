@@ -86,14 +86,13 @@ class med_perananController extends Controller
 
     public function update(Request $request)    {
         $id = $request->input('id_peranan');
+        // dd($id);
         $nama_peranan = $request->input('nama_peranan');
         $FK_submodul = $request->input('FK_submodul');
         $FK_capaian = $request->input('FK_capaian');
         $updated_by = $request->input('updated_by');
 
-        $peranan = med_peranan::find($id); 
-
-        $peranan -> update([
+        $peranan = med_peranan::where('id_peranan','=',$id) -> update([
             'nama_peranan' => $nama_peranan,
             'FK_submodul' => $FK_submodul,
             'FK_capaian' => $FK_capaian,

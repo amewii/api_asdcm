@@ -117,6 +117,32 @@ class med_permohonanController extends Controller
         
     }
 
+    public function listFilter($FK_peranan,$FK_kluster)  {
+
+        $med_permohonan = '';
+        if($FK_peranan == 2){
+            $med_permohonan = med_permohonan::  join('med_users', 'med_users.id_users', '=', 'med_permohonan.FK_users') -> 
+                                                join('med_program', 'med_program.id_program', '=', 'med_permohonan.FK_program') -> 
+                                                join('med_status', 'med_status.id_status', '=', 'med_permohonan.status_permohonan') -> 
+                                                where('med_permohonan.statusrekod','1') -> where('med_users.statusrekod','1') -> where('med_permohonan.statusrekod','1') -> 
+                                                where('med_program.FK_kluster',$FK_kluster) ->
+                                                orderBy('tarikh_permohonan', 'desc') ->
+                                                get(); // list all data
+        }else if($FK_peranan == 3){
+
+        }
+        
+
+        if ($med_permohonan)   {
+            return response()->json([
+                'success'=>'true',
+                'message'=>'List Success!',
+                'data'=>$med_permohonan
+            ],200);
+        }
+        
+    }
+
     public function listtahun()  {
         $med_programs = med_permohonan::select(med_permohonan::raw("substr(tarikh_permohonan,1,4) as tahun")) -> 
                         groupBy('tahun')->

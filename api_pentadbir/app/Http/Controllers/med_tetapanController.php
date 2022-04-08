@@ -87,11 +87,17 @@ class med_tetapanController extends Controller
         $min_katalaluan = $request->input('min_katalaluan');
         $polisi_katalaluan = $request->input('polisi_katalaluan');
         $active_until = $request->input('active_until');
+        $mail_gateway = $request->input('mail_gateway');
+        $mail_username = $request->input('mail_username');
+        $mail_password = $request->input('mail_password');
+        $mail_smtp_secure = $request->input('mail_smtp_secure');
+        $mail_port = $request->input('mail_port');
+        $link_sistem = $request->input('link_sistem');
         $updated_by = $request->input('updated_by');
 
-        $med_tetapan = med_tetapan::find($id); 
+        // $med_tetapan = med_tetapan::find($id); 
 
-        $med_tetapan -> update([
+        $med_tetapan = med_tetapan::where('id_tetapan',$id)  -> update([
             'nama_sistem' => $nama_sistem,
             'versi_sistem' => $versi_sistem,
             'pelepasan_sistem' => $pelepasan_sistem,
@@ -99,6 +105,12 @@ class med_tetapanController extends Controller
             'min_katalaluan' => $min_katalaluan,
             'polisi_katalaluan' => $polisi_katalaluan,
             'active_until' => $active_until,
+            'mail_gateway' => $mail_gateway,
+            'mail_username' => $mail_username,
+            'mail_password' => $mail_password,
+            'mail_smtp_secure' => $mail_smtp_secure,
+            'mail_port' => $mail_port,
+            'link_sistem' => $link_sistem,
             'updated_by' => $updated_by
         ]);
 
@@ -121,9 +133,9 @@ class med_tetapanController extends Controller
     public function delete(Request $request)    {
         $id = $request->input('id_tetapan');
 
-        $med_tetapan = med_tetapan::find($id); 
+        // $med_tetapan = med_tetapan::find($id); 
 
-        $med_tetapan -> update([
+        $med_tetapan = med_tetapan::where('id_tetapan',$id) -> update([
             'statusrekod' => '0',
         ]);
 
